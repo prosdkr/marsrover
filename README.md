@@ -16,4 +16,4 @@ The exercise we’d like to see is to use the NASA API described [here](https://
 ### Bonus 
 * Bonus - Unit Tests, Static Analysis, Performance tests or any other things you feel are important for Deﬁnition of Done
 * Double Bonus - Have the app display the image in a web browser
-* Triple Bonus – Have it run in a Docker or KB (Preferable)
+* Triple Bonus – Have it run in a Docker or K8s (Preferable)
