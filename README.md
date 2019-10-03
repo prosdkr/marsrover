@@ -9,7 +9,7 @@ The exercise we’d like to see is to use the NASA API described [here](https://
     * June 2, 2018
     * Jul-13-2016
     * April 31, 2018
-* Language can be Java, Python, JavaScript, or Go.
+* Language needs to be Java.
 * We should be able to run and build (if applicable) locally after you submit it
 * Include relevant documentation (.MD, etc.) in the repo
 
