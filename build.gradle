@@ -1,0 +1,36 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.apache.commons:commons-lang3:3.7')
+    compile('commons-codec:commons-codec:1.11')
+    compile('org.glassfish.jersey.core:jersey-client:2.27')
+    compile('org.glassfish.jersey.media:jersey-media-json-jackson:2.27')
+    compile('org.glassfish.jersey.core:jersey-common:2.27')
+    compile('org.glassfish.jersey.inject:jersey-hk2:2.27')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
