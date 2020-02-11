@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PhotoCrud</title>
+  <style type="text/css">
+    @import "../../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.isam.marsrover.resource.photo</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PhotoCrud (com.isam.marsrover.resource.photo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PhotoCrud</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72.2%
+  </span>
+  <span class="absValue">
+    (13/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.isam.marsrover.resource.photo;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.isam.marsrover.entities.Photo;
+<i>4</i>&nbsp;import org.slf4j.Logger;
+<i>5</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>6</i>&nbsp;import org.slf4j.Marker;
+<i>7</i>&nbsp;import org.slf4j.MarkerFactory;
+<i>8</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>9</i>&nbsp;import org.springframework.http.MediaType;
+<i>10</i>&nbsp;import org.springframework.http.ResponseEntity;
+<i>11</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.io.File;
+<i>14</i>&nbsp;import java.io.IOException;
+<i>15</i>&nbsp;import java.nio.file.Files;
+<i>16</i>&nbsp;import java.util.List;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import static com.isam.marsrover.MarsRoverConstants.*;
+<i>19</i>&nbsp;import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;@CrossOrigin
+<i>22</i>&nbsp;@RestController
+<i>23</i>&nbsp;@RequestMapping(REST_V1 + ROVER_ENDPOINT)
+<i>24</i>&nbsp;public class PhotoCrud {
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;    private Logger logger = LoggerFactory.getLogger(PhotoCrud.class.getName());</b>
+<b class="fc"><i>27</i>&nbsp;    private Marker marker = MarkerFactory.getMarker(PhotoCrud.class.getName());</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    private final PhotoService photoService;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Autowired
+<b class="fc"><i>32</i>&nbsp;    public PhotoCrud(PhotoService photoService) {</b>
+<b class="fc"><i>33</i>&nbsp;        this.photoService = photoService;</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @RequestMapping(value = &quot;/{name}&quot; + PHOTOS_ENDPOINT, method = RequestMethod.GET)
+<i>38</i>&nbsp;    public List&lt;Photo&gt; getRoverPhotos(@PathVariable String name, @RequestParam(EARTH_DATE_PARAM) String date) {
+<b class="fc"><i>39</i>&nbsp;        return photoService.getPhotoList(name, date);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @RequestMapping(value = &quot;/{name}&quot; + PHOTOS_FOR_DATES_ENDPOINT, method = RequestMethod.GET)
+<i>43</i>&nbsp;    public List&lt;Photo&gt; getRoverPhotos(@PathVariable String name) {
+<b class="fc"><i>44</i>&nbsp;        return photoService.getAllPhotosForGivenDatesAndName(name);</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    @RequestMapping(value = PHOTOS_ENDPOINT, method = RequestMethod.GET)
+<i>48</i>&nbsp;    public ResponseEntity&lt;byte[]&gt; getImgUrl(@RequestParam(IMAGE_SOURCE_PARAM) String imgSrc) {
+<b class="fc"><i>49</i>&nbsp;        if (imgSrc == null || imgSrc.isEmpty()) {</b>
+<b class="nc"><i>50</i>&nbsp;            return ResponseEntity.badRequest().build(); //Bad request, no image specified. Scenario on this?</b>
+<i>51</i>&nbsp;        }
+<b class="fc"><i>52</i>&nbsp;        File file = photoService.getPhoto(imgSrc);</b>
+<b class="fc"><i>53</i>&nbsp;        if (file == null) {</b>
+<i>54</i>&nbsp;            //Image URL was provided, but could not be downloaded for some unknown (but logged &quot;hopefully&quot;)reason.
+<b class="nc"><i>55</i>&nbsp;            return ResponseEntity.notFound().build();</b>
+<i>56</i>&nbsp;        }
+<i>57</i>&nbsp;        try {
+<b class="fc"><i>58</i>&nbsp;            return ResponseEntity.ok()</b>
+<b class="fc"><i>59</i>&nbsp;                                 .contentType(MediaType.IMAGE_JPEG)</b>
+<b class="fc"><i>60</i>&nbsp;                                 .body(Files.readAllBytes(file.toPath()));</b>
+<b class="nc"><i>61</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>62</i>&nbsp;            logger.error(marker, &quot;Error occurred while trying to serve file to client: {}&quot;, e.getMessage());</b>
+<i>63</i>&nbsp;        }
+<b class="nc"><i>64</i>&nbsp;        return ResponseEntity.status(SERVICE_UNAVAILABLE).build();</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-02-11 05:34</div>
+</div>
+</body>
+</html>

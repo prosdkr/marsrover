@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Rover</title>
+  <style type="text/css">
+    @import "../../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.isam.marsrover.entities</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Rover (com.isam.marsrover.entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Rover</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/ 28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.isam.marsrover.entities;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;public class Rover {</b>
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    private Integer id;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private String name;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    @JsonProperty(&quot;landing_date&quot;)
+<i>14</i>&nbsp;    private String landingDate;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @JsonProperty(&quot;launch_date&quot;)
+<i>17</i>&nbsp;    private String launchDate;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private String status;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @JsonProperty(&quot;max_sol&quot;)
+<i>22</i>&nbsp;    private Integer maxSol;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @JsonProperty(&quot;max_date&quot;)
+<i>25</i>&nbsp;    private String maxDate;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @JsonProperty(&quot;total_photos&quot;)
+<i>28</i>&nbsp;    private Integer totalPhotos;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    private List&lt;Camera&gt; cameras;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public Integer getId() {
+<b class="fc"><i>33</i>&nbsp;        return id;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public void setId(Integer id) {
+<b class="fc"><i>37</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>38</i>&nbsp;    }</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public String getName() {
+<b class="fc"><i>41</i>&nbsp;        return name;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public void setName(String name) {
+<b class="fc"><i>45</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    public String getLandingDate() {
+<b class="fc"><i>49</i>&nbsp;        return landingDate;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    public void setLandingDate(String landingDate) {
+<b class="fc"><i>53</i>&nbsp;        this.landingDate = landingDate;</b>
+<b class="fc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    public String getLaunchDate() {
+<b class="fc"><i>57</i>&nbsp;        return launchDate;</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    public void setLaunchDate(String launchDate) {
+<b class="fc"><i>61</i>&nbsp;        this.launchDate = launchDate;</b>
+<b class="fc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    public String getStatus() {
+<b class="fc"><i>65</i>&nbsp;        return status;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    public void setStatus(String status) {
+<b class="fc"><i>69</i>&nbsp;        this.status = status;</b>
+<b class="fc"><i>70</i>&nbsp;    }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public Integer getMaxSol() {
+<b class="fc"><i>73</i>&nbsp;        return maxSol;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public void setMaxSol(Integer maxSol) {
+<b class="fc"><i>77</i>&nbsp;        this.maxSol = maxSol;</b>
+<b class="fc"><i>78</i>&nbsp;    }</b>
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    public String getMaxDate() {
+<b class="fc"><i>81</i>&nbsp;        return maxDate;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    public void setMaxDate(String maxDate) {
+<b class="fc"><i>85</i>&nbsp;        this.maxDate = maxDate;</b>
+<b class="fc"><i>86</i>&nbsp;    }</b>
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    public Integer getTotalPhotos() {
+<b class="fc"><i>89</i>&nbsp;        return totalPhotos;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    public void setTotalPhotos(Integer totalPhotos) {
+<b class="fc"><i>93</i>&nbsp;        this.totalPhotos = totalPhotos;</b>
+<b class="fc"><i>94</i>&nbsp;    }</b>
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    public List&lt;Camera&gt; getCameras() {
+<b class="fc"><i>97</i>&nbsp;        return cameras;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public void setCameras(List&lt;Camera&gt; cameras) {
+<b class="fc"><i>101</i>&nbsp;        this.cameras = cameras;</b>
+<b class="fc"><i>102</i>&nbsp;    }</b>
+<i>103</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-02-11 05:34</div>
+</div>
+</body>
+</html>

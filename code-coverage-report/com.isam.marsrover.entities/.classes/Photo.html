@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Photo</title>
+  <style type="text/css">
+    @import "../../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.isam.marsrover.entities</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Photo (com.isam.marsrover.entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Photo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.isam.marsrover.entities;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;public class Photo {</b>
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    private Integer id;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    private Integer sol;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private Camera camera;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    @JsonProperty(&quot;img_src&quot;)
+<i>14</i>&nbsp;    private String imageSource;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @JsonProperty(&quot;earth_date&quot;)
+<i>17</i>&nbsp;    private String earthDate;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private Rover rover;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public Integer getId() {
+<b class="fc"><i>22</i>&nbsp;        return id;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void setId(Integer id) {
+<b class="fc"><i>26</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public Integer getSol() {
+<b class="fc"><i>30</i>&nbsp;        return sol;</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public void setSol(Integer sol) {
+<b class="fc"><i>34</i>&nbsp;        this.sol = sol;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public Camera getCamera() {
+<b class="fc"><i>38</i>&nbsp;        return camera;</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public void setCamera(Camera camera) {
+<b class="fc"><i>42</i>&nbsp;        this.camera = camera;</b>
+<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public String getImageSource() {
+<b class="fc"><i>46</i>&nbsp;        return imageSource;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public void setImageSource(String imageSource) {
+<b class="fc"><i>50</i>&nbsp;        this.imageSource = imageSource;</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public String getEarthDate() {
+<b class="fc"><i>54</i>&nbsp;        return earthDate;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public void setEarthDate(String earthDate) {
+<b class="fc"><i>58</i>&nbsp;        this.earthDate = earthDate;</b>
+<b class="fc"><i>59</i>&nbsp;    }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public Rover getRover() {
+<b class="fc"><i>62</i>&nbsp;        return rover;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    public void setRover(Rover rover) {
+<b class="fc"><i>66</i>&nbsp;        this.rover = rover;</b>
+<b class="fc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-02-11 05:34</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PhotoService</title>
+  <style type="text/css">
+    @import "../../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.isam.marsrover.resource.photo</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PhotoService (com.isam.marsrover.resource.photo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PhotoService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (6/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40.4%
+  </span>
+  <span class="absValue">
+    (23/ 57)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.isam.marsrover.resource.photo;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.isam.marsrover.NasaClient;
+<i>4</i>&nbsp;import com.isam.marsrover.entities.Photo;
+<i>5</i>&nbsp;import com.isam.marsrover.resource.dates.DateService;
+<i>6</i>&nbsp;import org.apache.commons.codec.digest.DigestUtils;
+<i>7</i>&nbsp;import org.apache.tomcat.util.http.fileupload.IOUtils;
+<i>8</i>&nbsp;import org.slf4j.Logger;
+<i>9</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>10</i>&nbsp;import org.slf4j.Marker;
+<i>11</i>&nbsp;import org.slf4j.MarkerFactory;
+<i>12</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>13</i>&nbsp;import org.springframework.stereotype.Service;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import java.io.File;
+<i>16</i>&nbsp;import java.io.IOException;
+<i>17</i>&nbsp;import java.io.InputStream;
+<i>18</i>&nbsp;import java.nio.file.*;
+<i>19</i>&nbsp;import java.util.ArrayList;
+<i>20</i>&nbsp;import java.util.Date;
+<i>21</i>&nbsp;import java.util.List;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import static com.isam.marsrover.MarsRoverConstants.IMAGE_CACHE_PATH;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;@Service
+<i>26</i>&nbsp;public class PhotoService {
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;    private final Logger logger = LoggerFactory.getLogger(PhotoService.class.getName());</b>
+<b class="fc"><i>29</i>&nbsp;    private final Marker marker = MarkerFactory.getMarker(PhotoService.class.getName());</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    private final NasaClient nasaClient;
+<i>32</i>&nbsp;    private final DateService dateService;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Autowired
+<b class="fc"><i>35</i>&nbsp;    public PhotoService(NasaClient nasaClient, DateService dateService) {</b>
+<b class="fc"><i>36</i>&nbsp;        this.nasaClient = nasaClient;</b>
+<b class="fc"><i>37</i>&nbsp;        this.dateService = dateService;</b>
+<b class="fc"><i>38</i>&nbsp;    }</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public List&lt;Photo&gt; getPhotoList(String name, String date) {
+<b class="fc"><i>41</i>&nbsp;        return nasaClient.getPhotoList(name, date);</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public List&lt;Photo&gt; getAllPhotosForGivenDatesAndName(String name) {
+<b class="fc"><i>45</i>&nbsp;        List&lt;Photo&gt; photos = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>46</i>&nbsp;        List&lt;String&gt; dates = dateService.getFormattedDates();</b>
+<b class="fc"><i>47</i>&nbsp;        if (dates == null) {</b>
+<b class="nc"><i>48</i>&nbsp;            return photos;</b>
+<i>49</i>&nbsp;        }
+<b class="fc"><i>50</i>&nbsp;        for (String date : dates) {</b>
+<b class="fc"><i>51</i>&nbsp;            List&lt;Photo&gt; datePhotos = getPhotoList(name, date);</b>
+<b class="fc"><i>52</i>&nbsp;            if (datePhotos != null) {</b>
+<b class="fc"><i>53</i>&nbsp;                photos.addAll(datePhotos);</b>
+<i>54</i>&nbsp;            }
+<b class="fc"><i>55</i>&nbsp;        }</b>
+<b class="fc"><i>56</i>&nbsp;        return photos;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public File getPhoto(String url) {
+<b class="fc"><i>60</i>&nbsp;        final String sha = DigestUtils.sha512Hex(url);</b>
+<b class="fc"><i>61</i>&nbsp;        final String imageFileName = IMAGE_CACHE_PATH + sha;</b>
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;        if (fileExists(imageFileName)) {</b>
+<b class="fc"><i>64</i>&nbsp;            logger.debug(marker, &quot;File {} already exists. Pulling from cache.&quot;, imageFileName);</b>
+<b class="fc"><i>65</i>&nbsp;            return readExistingImage(imageFileName);</b>
+<i>66</i>&nbsp;        } else {
+<b class="nc"><i>67</i>&nbsp;            return downloadAndReturnNewImage(url, imageFileName);</b>
+<i>68</i>&nbsp;        }
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    private File readExistingImage(String imageFileName) {
+<i>72</i>&nbsp;        try {
+<b class="fc"><i>73</i>&nbsp;            return Paths.get(imageFileName).toFile();</b>
+<b class="nc"><i>74</i>&nbsp;        } catch(InvalidPathException ipe) {</b>
+<b class="nc"><i>75</i>&nbsp;            logger.error(marker, &quot;Tried to read a validated file. &quot; +</b>
+<i>76</i>&nbsp;                                 &quot;Was the file {} deleted immediately upon validation?: {}&quot;,
+<b class="nc"><i>77</i>&nbsp;                                 imageFileName, ipe.getMessage());</b>
+<i>78</i>&nbsp;        }
+<b class="nc"><i>79</i>&nbsp;        return null;</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    private File downloadAndReturnNewImage(String url, String imageFileName) {
+<b class="nc"><i>83</i>&nbsp;        InputStream inputStream = nasaClient.getPhoto(url);</b>
+<i>84</i>&nbsp;        try {
+<b class="nc"><i>85</i>&nbsp;            if (inputStream == null) {</b>
+<b class="nc"><i>86</i>&nbsp;                logger.error(marker, &quot;Image could not be pulled from target, is it the right URL?&quot;);</b>
+<b class="nc"><i>87</i>&nbsp;                throw new Exception();</b>
+<i>88</i>&nbsp;            }
+<b class="nc"><i>89</i>&nbsp;            Path filePath = createFile(imageFileName);</b>
+<b class="nc"><i>90</i>&nbsp;            saveFile(inputStream, filePath);</b>
+<b class="nc"><i>91</i>&nbsp;            return filePath.toFile();</b>
+<b class="nc"><i>92</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>93</i>&nbsp;            logger.error(marker, &quot;Exception occurred during new image retrieval process.&quot;);</b>
+<i>94</i>&nbsp;        } finally {
+<b class="nc"><i>95</i>&nbsp;            IOUtils.closeQuietly(inputStream);</b>
+<b class="nc"><i>96</i>&nbsp;        }</b>
+<b class="nc"><i>97</i>&nbsp;        return null;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public Path createFile(String fileName) throws IOException {
+<i>101</i>&nbsp;        try {
+<b class="nc"><i>102</i>&nbsp;           return Files.createFile(Paths.get(fileName));</b>
+<b class="nc"><i>103</i>&nbsp;        } catch (IOException | SecurityException e) {</b>
+<b class="nc"><i>104</i>&nbsp;            logger.error(marker, &quot;Something went wrong creating the file. Do you have read/write access to the cache?&quot;</b>
+<b class="nc"><i>105</i>&nbsp;                                 + e.getMessage());</b>
+<b class="nc"><i>106</i>&nbsp;            throw e;</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    public void saveFile(InputStream toSave, Path filePath) throws IOException {
+<i>111</i>&nbsp;        try {
+<b class="nc"><i>112</i>&nbsp;            Files.copy(toSave, filePath, StandardCopyOption.REPLACE_EXISTING);</b>
+<b class="nc"><i>113</i>&nbsp;        } catch (IOException | SecurityException e) {</b>
+<b class="nc"><i>114</i>&nbsp;            logger.error(marker, &quot;Error occurred when attempting to save data to file in cache at {} : {}&quot;,</b>
+<b class="nc"><i>115</i>&nbsp;                                 filePath, e.getMessage());</b>
+<b class="nc"><i>116</i>&nbsp;            throw e;</b>
+<b class="nc"><i>117</i>&nbsp;        }</b>
+<b class="nc"><i>118</i>&nbsp;    }</b>
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    private boolean fileExists(String imageFileName) {
+<i>121</i>&nbsp;        try {
+<b class="fc"><i>122</i>&nbsp;            return Files.exists(Paths.get(imageFileName));</b>
+<b class="nc"><i>123</i>&nbsp;        } catch (SecurityException se) {</b>
+<b class="nc"><i>124</i>&nbsp;            logger.error(marker, &quot;Could not check the cache for file&#39;s existence at {} &quot; +</b>
+<b class="nc"><i>125</i>&nbsp;                                 &quot;Do you have read/write access to the cache?: {}&quot;, imageFileName, se.getMessage());</b>
+<i>126</i>&nbsp;        }
+<b class="nc"><i>127</i>&nbsp;        return false;</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-02-11 05:34</div>
+</div>
+</body>
+</html>
